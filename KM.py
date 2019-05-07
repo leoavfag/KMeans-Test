@@ -3,6 +3,7 @@ import pandas as pd
 import random
 import math
 from sklearn import datasets
+import matplotlib.pyplot as plt
 
 iris = datasets.load_iris()
 k = 3 # Numero de clusters
@@ -92,7 +93,30 @@ for j in range(len(data)):
                          for k in range(len(grupos[g][0])):
                              if j == grupos[g][0][k]:
                                  del(grupos[g][0][k])
+                                 break
                              
                              
 
 print(grupos)
+
+cls = np.zeros(len(data),dtype=int)
+
+NPC = 0
+
+for a in grupos:
+    for i in grupos[a][0]:
+        cls[i] = NPC
+    NPC+=1
+
+print(cls)
+
+X = iris.data[:, :2]  # as duas primeiras caracteristicas
+y = cls
+plt.subplots()
+plt.scatter(X[:, 0], X[:, 1], c=y, cmap=plt.cm.Set1)
+plt.xlabel('Comprimento Sepala')
+plt.ylabel('Largura Sepala')
+plt.grid(True)
+plt.show()
+
+
